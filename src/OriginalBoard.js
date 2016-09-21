@@ -73,85 +73,33 @@
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
-    /*var conflicted = new Board([
-      [1, 1, 0, 0],
-      [1, 1, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0]
-    ]);*/
+
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
-    hasConflict: function(array) {
-      //conflict variable
-      var conflictSum = 0;
-      //itearate over array
-      for (var i = 0; i < array.length; i++) {
-        conflictSum += array[i];
-      }
-      //return
-      if (conflictSum > 1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-
     hasRowConflictAt: function(rowIndex) {
-      var currentRow = this.get(rowIndex);
-      //console.log(currentRow);
-      return this.hasConflict(currentRow);
+      return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      //get size
-      var boardHeight = this.attributes.n;
-      //iterate over board rows
-      for (var i = 0; i < boardHeight; i++) {
-        var currentRow = this.get(i);
-        //if row has conflict, return true
-        if ( this.hasConflict(currentRow) ) {
-          return true;
-        }
-      }
-      return false;
+      return false; // fixme
     },
+
+
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      //map column to array
-      var column = [];
-      //find size of matrix
-      var boardHeight = this.attributes.n;
-      //iterate from 0 to size
-      for (var i = 0; i < boardHeight; i++) {
-        //access row element at colIndex
-        var currentRow = this.get(i);
-        //push to new array
-        column.push(currentRow[colIndex]);
-      }
-      //return hasConflict on new colum array
-      return this.hasConflict(column);
+      return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      //get size of board
-      var boardHeight = this.attributes.n;
-      //iterate over size of board
-
-      for (var i = 0; i < boardHeight; i++) {
-        //call hasColConflictAt on each column index; //if true, return true
-        if ( this.hasColConflictAt(i) ) {
-          return true;
-        }
-      }
-      return false;
+      return false; // fixme
     },
 
 
