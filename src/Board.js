@@ -45,8 +45,8 @@
       return (
         this.hasRowConflictAt(rowIndex) ||
         this.hasColConflictAt(colIndex) ||
-        this.hasMajorDiagonalConflictAt(this._getFirstRowColumnIndexForMajorDiagonalOn(rowIndex, colIndex)) ||
-        this.hasMinorDiagonalConflictAt(this._getFirstRowColumnIndexForMinorDiagonalOn(rowIndex, colIndex))
+        this.hasMajorDiagonalConflictAt(rowIndex, colIndex) ||
+        this.hasMinorDiagonalConflictAt(rowIndex, colIndex)
       );
     },
 
@@ -159,9 +159,54 @@
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
+    majorDiagonalize: function() {
+      var rowsNum = this.attributes.n;
+      var colsNum = this.attributes.n;
+      
+      var diagonals = [];
+      for (var i = 1 - rowsNum; i < colsNum; i++) {
+        var oneDiag = [];
+        for (var j = 0; j < rowsNum; j++) {
+          if ((i + j) >= 0 && (i + j) < colsNum) {
+            var item = this.get(j)[i + j];
+            oneDiag.push(item);
+          }
+        }
+        diagonals.push(oneDiag);
+      }
+      this.majorDiags = diagonals;
+    },
+
+    minorDiagonalize: function() {
+      var size = this.attributes.n;
+      //var colsNum = this.attributes.n;
+      
+      var diagonals = [];
+      for (var i = 1 - size; i < size; i++) {
+        var oneDiag = [];
+        for (var j = size - 1; j > -1; j--) {
+          if ((i + j) >= 0 && (i + j) < size) {
+            var item = this.get(j)[i + j];
+            oneDiag.push(item);
+          }
+        }
+        diagonals.push(oneDiag);
+      }
+      this.minorDiags = diagonals;
+    },
+
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMajorDiagonalConflictAt: function(x, y) {
+      this.majorDiagonalize();
+      var dif = x - y;
+      var index;
+      if (dif <= 0) {
+        index = Math.abs(dif);
+      } else {
+        index = -Math.abs(dif);
+      }
+      index += this.attributes.n - 1;
+      return this.hasConflict(this.majorDiags[index]);
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -175,8 +220,14 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMinorDiagonalConflictAt: function(x, y) {
+      this.minorDiagonalize();
+      //console.dir(this.minorDiags);
+      var index = x + y;
+
+      return this.hasConflict(this.minorDiags[index]);  
+
+      
     },
 
     // test if any minor diagonals on this board contain conflicts
