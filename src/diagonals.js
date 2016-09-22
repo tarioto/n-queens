@@ -25,12 +25,14 @@ console.log(diagonals);//
 
 //top left to bottom right
 
-int n = 3;
-    for (int slice = 0; slice < 2 * n - 1; ++slice) {
-      printf("Slice %d: ", slice);
-      int z = slice < n ? 0 : slice - n + 1;
-      for (int j = z; j <= slice - z; ++j) {
-        printf("%d ", x[j][slice - j]);
-      }
-      printf("\n");
-    }
+var n = 3;
+for (var slice = 0; slice < 2 * n - 1; ++slice) {
+  // printf("Slice %d: ", slice);
+  
+  var z = slice < n ? 0 : slice - n + 1;
+  for (var j = z; j <= slice - z; ++j) {
+    //push
+    printf("%d ", x[j][slice - j]);
+  }
+  //printf("\n");
+}

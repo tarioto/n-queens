@@ -74,10 +74,10 @@
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
     /*var conflicted = new Board([
-      [1, 1, 0, 0],
-      [1, 1, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0]
+      [00,01, 02, 03],
+      [10, 11, 12, 13],
+      [20, 21, 22, 23],
+      [30, 32, 32, 33]
     ]);*/
     // ROWS - run from left to right
     // --------------------------------------------------------------
@@ -182,13 +182,27 @@
       //var colsNum = this.attributes.n;
       
       var diagonals = [];
-      for (var i = 1 - size; i < size; i++) {
+      // for (var i = 1 - size; i < size; i++) {
+      //   var oneDiag = [];
+      //   for (var j = size - 1; j > -1; j--) {
+      //     if ((i + j) >= 0 && (i + j) < size) {
+      //       var item = this.get(j)[i + j];
+      //       oneDiag.push(item);
+      //     }
+      //   }
+      //   diagonals.push(oneDiag);
+      // }
+      var n = size;
+      for (var slice = 0; slice < 2 * n - 1; ++slice) {
+      // printf("Slice %d: ", slice);
         var oneDiag = [];
-        for (var j = size - 1; j > -1; j--) {
-          if ((i + j) >= 0 && (i + j) < size) {
-            var item = this.get(j)[i + j];
-            oneDiag.push(item);
-          }
+        var z = slice < n ? 0 : slice - n + 1;
+        for (var j = z; j <= slice - z; ++j) {
+          //push
+          // printf("%d ", x[j][slice - j]);
+
+          var item = this.get(j)[slice - j];
+          oneDiag.push(item);
         }
         diagonals.push(oneDiag);
       }
@@ -211,7 +225,13 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      this.majorDiagonalize();
+      for (var i = 0; i < this.majorDiags.length; i++) {
+        if (this.hasConflict(this.majorDiags[i])) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -232,7 +252,13 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      this.minorDiagonalize();
+      for (var i = 0; i < this.minorDiags.length; i++) {
+        if (this.hasConflict(this.minorDiags[i])) {
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
